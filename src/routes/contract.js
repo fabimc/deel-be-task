@@ -4,6 +4,7 @@ const { contractController } = require('../controllers')
 
 const router = express.Router()
 
-router.get('/contracts/:id', getProfile, contractController.getContract)
+router.get('/:id', getProfile, contractController.getContract)
+router.get('/', getProfile, contractController.getContracts)
 
 module.exports = router

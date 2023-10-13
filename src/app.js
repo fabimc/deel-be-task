@@ -5,6 +5,6 @@ const { contractRouter } = require('./routes')
 const app = express()
 app.use(bodyParser.json())
 
-app.use('/', contractRouter)
+app.use('/contracts', contractRouter)
 
 module.exports = app

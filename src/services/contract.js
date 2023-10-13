@@ -16,4 +16,21 @@ const getContract = async (id, profileId) =>
     }
   })
 
-  module.exports = { getContract }
+const getContracts = async profileId =>
+  await Contract.findAll({
+    where: {
+      status: {
+        [Op.ne]: 'terminated'
+      },
+      [Op.or]: [
+        {
+          ClientId: profileId
+        },
+        {
+          ContractorId: profileId
+        }
+      ]
+    }
+  })
+
+module.exports = { getContract, getContracts }

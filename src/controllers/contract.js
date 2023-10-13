@@ -11,4 +11,13 @@ const getContract = async (req, res) => {
   res.json(contract)
 }
 
-module.exports = { getContract }
+const getContracts = async (req, res) => {
+  const profileId = req.profile.id
+
+  const contract = await contractService.getContracts(profileId)
+  
+  if (!contract) return res.status(404).end()
+  res.json(contract)
+}
+
+module.exports = { getContract, getContracts }
