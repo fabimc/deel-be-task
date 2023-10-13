@@ -14,10 +14,10 @@ const getContract = async (req, res) => {
 const getContracts = async (req, res) => {
   const profileId = req.profile.id
 
-  const contract = await contractService.getContracts(profileId)
+  const contracts = await contractService.getContracts(profileId)
   
-  if (!contract) return res.status(404).end()
-  res.json(contract)
+  if (!contracts) return res.status(404).end()
+  res.json(contracts)
 }
 
 module.exports = { getContract, getContracts }
