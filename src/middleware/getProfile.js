@@ -1,7 +1,7 @@
-const { Profile } = require('../models')
+const { profileService } = require('../services')
 
 const getProfile = async (req, res, next) => {
-  const profile = await Profile.findOne({ where: { id: req.get('profile_id') || 0 } })
+  const profile = await profileService.getProfile(req.get('profile_id'))
   if (!profile) return res.status(401).end()
   req.profile = profile
   next()
