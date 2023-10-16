@@ -1,24 +1,6 @@
-const { Op, QueryTypes } = require('sequelize')
+const { Op } = require('sequelize')
 const { sequelize } = require('../core/database')
 const { Contract, Job, Profile } = require('../models')
-
-getBestProfession = async (start, end) => {
-  const rawQuery = `SELECT p.firstName, p.lastName, SUM(j.price) AS totalEarnings
-  FROM Profiles AS p
-  JOIN Contracts AS c ON p.id = c.ContractorId
-  JOIN Jobs AS j ON c.id = j.ContractId
-  WHERE j.paid = 1 AND j.paymentDate BETWEEN :start AND :end
-  GROUP BY p.id
-  ORDER BY totalEarnings DESC
-  LIMIT 1;`
-
-  const bestContractor = await sequelize.query(rawQuery, {
-    replacements: { start, end },
-    type: QueryTypes.SELECT
-  })
-
-  return bestContractor
-}
 
 const getJobToPay = async (id, profileId, transaction) => {
   let job = null
@@ -113,4 +95,4 @@ const payJob = async (id, profileId) => {
   }
 }
 
-module.exports = { getBestProfession, getUnpaidJobs, payJob }
+module.exports = { getUnpaidJobs, payJob }
