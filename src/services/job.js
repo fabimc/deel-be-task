@@ -1,6 +1,52 @@
-const { Op } = require('sequelize')
+const { Op, QueryTypes } = require('sequelize')
 const { sequelize } = require('../core/database')
 const { Contract, Job, Profile } = require('../models')
+
+getBestProfession = async (start, end) => {
+  const rawQuery = `SELECT p.firstName, p.lastName, SUM(j.price) AS totalEarnings
+  FROM Profiles AS p
+  JOIN Contracts AS c ON p.id = c.ContractorId
+  JOIN Jobs AS j ON c.id = j.ContractId
+  WHERE j.paid = 1 AND j.paymentDate BETWEEN :start AND :end
+  GROUP BY p.id
+  ORDER BY totalEarnings DESC
+  LIMIT 1;`
+
+  const bestContractor = await sequelize.query(rawQuery, {
+    replacements: { start, end },
+    type: QueryTypes.SELECT
+  })
+
+  return bestContractor
+}
+
+const getJobToPay = async (id, profileId, transaction) => {
+  let job = null
+
+  try {
+    job = await Job.findOne({
+      include: [
+        {
+          model: Contract,
+          where: {
+            ClientId: profileId
+          }
+        }
+      ],
+      where: {
+        id,
+        paid: {
+          [Op.is]: null
+        }
+      },
+      transaction
+    })
+  } catch (err) {
+    throw err
+  }
+
+  return job
+}
 
 const getUnpaidJobs = async (profileId) =>
   await Job.findAll({
@@ -67,32 +113,4 @@ const payJob = async (id, profileId) => {
   }
 }
 
-const getJobToPay = async (id, profileId, transaction) => {
-  let job = null
-
-  try {
-    job = await Job.findOne({
-      include: [
-        {
-          model: Contract,
-          where: {
-            ClientId: profileId
-          }
-        }
-      ],
-      where: {
-        id,
-        paid: {
-          [Op.is]: null
-        }
-      },
-      transaction
-    })
-  } catch (err) {
-    throw err
-  }
-
-  return job
-}
-
-module.exports = { getUnpaidJobs, payJob }
+module.exports = { getBestProfession, getUnpaidJobs, payJob }

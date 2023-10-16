@@ -1,9 +1,9 @@
 const express = require('express')
 const { getProfile } = require('../middleware/getProfile')
-const { profileController } = require('../controllers')
+const { balanceController } = require('../controllers')
 
 const router = express.Router()
 
-router.post('/deposit/:userId', getProfile, profileController.deposit)
+router.post('/deposit/:userId', getProfile, balanceController.deposit)
 
 module.exports = router
