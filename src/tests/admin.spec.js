@@ -6,12 +6,12 @@ describe('GET /admin/best-clients', () => {
     await request(app)
       .get('/admin/best-clients?start=1597471200000&end=1597730399000&limit=2')
       .expect(200)
+      .expect('Content-Type', /application\/json/)
       .then((response) => {
-        
         // Check the response type and length
         expect(Array.isArray(response.body)).toBeTruthy()
         expect(response.body.length).toEqual(2)
-        
+
         // Check the response data
         expect(response.body[0].id).toBe(1)
         expect(response.body[0].fullName).toBe('Harry Potter')
