@@ -13,9 +13,9 @@ describe('GET /admin/best-clients', () => {
         expect(response.body.length).toEqual(2)
 
         // Check the response data
-        expect(response.body[0].id).toBe(1)
-        expect(response.body[0].fullName).toBe('Harry Potter')
-        expect(response.body[0].paid).toBe(5421)
+        expect(response.body[0].id).toBe(4)
+        expect(response.body[0].fullName).toBe('Ash Kethcum')
+        expect(response.body[0].paid).toBe(2020)
       })
   })
 })
