@@ -12,14 +12,14 @@ app.get('/health', (req, res) => {
   res.status(200).send('OK')
 })
 
-app.use('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/views/index.html'));
-})
-
 // Api routes
 app.use('/api/admin', adminRouter)
 app.use('/api/balances', balanceRouter)
 app.use('/api/contracts', contractRouter)
 app.use('/api/jobs', jobRouter)
+
+app.use('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/views/index.html'));
+})
 
 module.exports = app
