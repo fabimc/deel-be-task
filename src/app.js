@@ -1,13 +1,25 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const path = require('path');
 const { adminRouter, balanceRouter, contractRouter, jobRouter } = require('./routes')
 
 const app = express()
 app.use(bodyParser.json())
 
-app.use('/admin', adminRouter)
-app.use('/balances', balanceRouter)
-app.use('/contracts', contractRouter)
-app.use('/jobs', jobRouter)
+// Health check
+
+app.get('/health', (req, res) => {
+  res.status(200).send('OK')
+})
+
+app.use('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/views/index.html'));
+})
+
+// Api routes
+app.use('/api/admin', adminRouter)
+app.use('/api/balances', balanceRouter)
+app.use('/api/contracts', contractRouter)
+app.use('/api/jobs', jobRouter)
 
 module.exports = app
