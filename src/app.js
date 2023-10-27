@@ -8,6 +8,8 @@ const { adminRouter, balanceRouter, contractRouter, jobRouter } = require('./rou
 const app = express()
 app.use(bodyParser.json())
 
+app.use(express.static(path.join(__dirname, '..', '/public')))
+
 // Health check
 app.get('/health', (req, res) => {
   res.status(200).send('OK')
@@ -21,7 +23,7 @@ app.use('/api/jobs', jobRouter)
 
 // UI routes
 app.use('/', (req, res) => {
-  const page = fs.readFileSync(path.join(__dirname, '/views/index.tpl')).toString()
+  const page = fs.readFileSync(path.join(__dirname, '/views/index.mustache'), 'utf8')
   const view = { title: 'Contracts’ Landing Page' }
   const output = Mustache.render(page, view)
   res.send(output)
