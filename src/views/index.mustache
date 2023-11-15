@@ -1,48 +1,69 @@
 <!DOCTYPE html>
-<html>
-  <link rel="stylesheet" href="css/pico.min.css">
+<html lang="en">
   <head>
-    <title>{{title}}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/pico.min.css" />
+    <title>{{ title }}</title>
   </head>
   <body>
-    <header>
-      <h1>Welcome to My Landing Page</h1>
-      <nav>
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <section id="about">
-        <h2>About Us</h2>
-        <p>We are a company that specializes in providing high-quality products and services to our customers.</p>
-      </section>
-      <section id="services">
-        <h2>Our Services</h2>
-        <ul>
-          <li>Service 1</li>
-          <li>Service 2</li>
-          <li>Service 3</li>
-        </ul>
-      </section>
-      <section id="contact">
-        <h2>Contact Us</h2>
-        <form>
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name"><br><br>
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email"><br><br>
-          <label for="message">Message:</label>
-          <textarea id="message" name="message"></textarea><br><br>
-          <input type="submit" value="Submit">
-        </form>
-      </section>
+    <!-- Nav -->
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="./" class="contrast" onclick="event.preventDefault()"><strong>fabimc</strong></a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <details role="list" dir="rtl">
+            <summary aria-haspopup="listbox" role="link" class="secondary">Theme</summary>
+            <ul role="listbox">
+              <li><a href="#" data-theme-switcher="auto">Auto</a></li>
+              <li><a href="#" data-theme-switcher="light">Light</a></li>
+              <li><a href="#" data-theme-switcher="dark">Dark</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </nav>
+    <!-- ./ Nav -->
+
+    <!-- Main -->
+    <main class="container">
+      <article class="grid">
+        <div>
+          <hgroup>
+            <h1>Sign in</h1>
+            <h2>A minimalist layout for Login pages</h2>
+          </hgroup>
+          <form action="api/auth/login" method="post">
+            <input type="text" name="email" placeholder="Email" aria-label="Login" autocomplete="nickname" required />
+            <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="current-password" required />
+            <fieldset>
+              <label for="remember">
+                <input type="checkbox" role="switch" id="remember" name="remember" />
+                Remember me
+              </label>
+            </fieldset>
+            <button type="submit" class="contrast">Login</button>
+          </form>
+        </div>
+        <div></div>
+      </article>
     </main>
-    <footer>
-      <p>&copy; 2023 My Landing Page</p>
+    <!-- ./ Main -->
+
+    <!-- Footer -->
+    <footer class="container">
+      <small
+        >Built with <a href="https://picocss.com" class="secondary">Pico</a> •
+        <a href="https://github.com/picocss/examples/tree/master/v1-sign-in/" class="secondary">Source code</a></small
+      >
     </footer>
+    <!-- ./ Footer -->
+
+    <!-- Minimal theme switcher -->
+    <script src="js/minimal-theme-switcher.js"></script>
   </body>
 </html>
